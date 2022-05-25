@@ -1,9 +1,7 @@
 const router = require("express").Router();
-const axios = require("axios");
-const { API_KEY } = require("../db");
 const { Genre, Videogame } = require("../db");
-const { getAllFromAPI, getVideogameById } = require("../services/getFromAPI");
-const { getAllFromDB, videogameByIdDB }= require("../services/getFromDB");
+const { getAllFromAPI, getVideogameById, getVideogameByNameFromAPI } = require("../services/getFromAPI");
+const { getAllFromDB, videogameByIdDB, getGenreFromAPIToDB, getVideogameByNameFromDB }= require("../services/getFromDB");
 
 // me traigo todo lo que tenga en la API y en la DB
 const getAll = async () => {
@@ -14,31 +12,42 @@ const getAll = async () => {
   return allVideogames;
 };
 
+/*router.get("/",*/ 
 // ruteo get para traer todo (API y DB) al cliente 
-const getVideogames = router.get("/", async (req, res, next) => {
-  const { name } = req.query;
+const getVideogames = async (req, res, next) => {
+
+  if (req.query.name) next()
 
   try {
     const allVideogames = await getAll();
 
-    if (name) {
-      const videogameByName = allVideogames.filter((videogame) =>
-        videogame.name.toLowerCase().includes(name.toLowerCase())
-      );
+    videogameByName.length ? // revisar que tengo que traerme 15 coincidencias. Ver cómo hacer
+    res.json(videogameByName) :
+    res.status(404).send('Videogame not found... :(')
+    return res.json(allVideogames)
 
-      videogameByName.length ? // revisar que tengo que traerme 15 coincidencias. Ver cómo hacer
-      res.json(videogameByName) :
-      res.status(404).send('Videogame not found... :(')
-    }
-
-    res.json(allVideogames)
   } catch (error) {
     next(error);
   }
-});
+};
 
+// en la siguiente función tengo que buscar 
+const getVideogamesByName = async (req, res, next) => {
+  const { name } = req.query;
+
+  try {
+    const videogameByName = allVideogames.filter((videogame) => // esto lo tengo que borrar y tengo que llamar a todo lo que me traiga desde la api y la base de datos con las cinco llamadas de una para lograr traerme los 100 videojuegos
+    videogame.name.toLowerCase().includes(name.toLowerCase())
+    );
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+/*router.get('/:id',*/
 // me traigo sólo lo que coincida con el id
-const getVideogamesById = router.get('/:id', async (req, res, next) => {
+const getVideogamesById = async (req, res, next) => {
   const { id } = req.params
 
   try {
@@ -49,27 +58,78 @@ const getVideogamesById = router.get('/:id', async (req, res, next) => {
       
     } else  {
       const fromAPI = await getVideogameById(id)
-      console.log(fromAPI)
       return res.json(fromAPI)
     } 
 
   } catch (error) {
     next(error)
   }
-});
+};
+
+const gamesGenre = async (req, res, next) => {
+  try {
+    const prueba = await getGenreFromAPIToDB()
+    return res.json(prueba)
+
+  } catch (error) {
+    next(error)
+  }
+};
+
+const createVideogame = async (req, res, next) => {
+  const { name, description, released, rating } = req.body;
+
+  try {
+    const videogameCreated = await Videogame.findOrCreate({
+      where: {
+        name,
+        description,
+        released,
+        rating,
+      }
+    });
+    return res.status(201).json(videogameCreated)
+  } catch (error) {
+    next(error)
+  }
+};
 
 const crear = async () => {
-  const algo = await Videogame.create({
+  const tabla = await Videogame.create({
     name: "Tomi",
     description: "esta es una prueba",
     platforms: ["todas"],
   });
-  return algo;
+  return tabla;
 };
+
+// const genre = async () => {
+//   const tabla2 = await Genre.create({
+//     name: ["Drama"],
+//   })
+//   return tabla2;
+// }
+
+// const otroGenre = async () => {
+//   return Genre.create({
+//     name: ["Acción", "Policial"]
+//   })
+// }
+
+// const masGenre = async () => {
+//   return Genre.create({
+//     name: ["Romántica", "Psicológica"]
+//   })
+// }
 
 
 module.exports = {
   getVideogames,
   getVideogamesById,
   crear,
+  gamesGenre,
+  createVideogame,
+  // genre,
+  // otroGenre,
+  // masGenre,
 };
