@@ -1,25 +1,58 @@
-require('dotenv').config();
+require("dotenv").config();
 const axios = require("axios");
-const { API_KEY } = process.env
+const { API_KEY } = process.env;
 
 // GET /videogames
 const getAllFromAPI = async () => {
-  const response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}`)).data.results
+  let response;
+  let videogamesFromAPI = [];
 
-  const videogamesFromAPI = response.map((ele) => ({
-    id: ele.id,
-    background_image: ele.background_image,
-    name: ele.name,
-    genre: ele.genres.map((g) => g.name),
+  for (let i = 2; i <= 6; i++) {
+    response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data
+    videogamesFromAPI.push(response.results.map((ele) => ({
+      background_image: ele.background_image,
+      name: ele.name,
+      genre: ele.genres.map((g) => g.name),
+      }))
+    );
+    videogamesFromAPI = videogamesFromAPI.flat();
+  }
+  return videogamesFromAPI;
+};
+
+
+// GET /videogames?name=...
+const getVideogameByNameFromAPI = async (name) => {
+  const response = (
+    await axios(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`)).data.results;
+
+  const videogames = response.map(e => ({
+    // id: e.id,
+    background_image: e.background_image,
+    name: e.name,
+    genre: e.genres.map(g => g.name),
+    // released: e.released,
+    // rating: e.rating,
+    // platforms: e.platforms.map(p => p.platform.name)
   }));
+  return videogames; // acá voy a tener 20 videojuegos. Buscar la forma de limitarlo a que me lleguen 15
+};
 
-  return videogamesFromAPI
-}
 
 // GET /videogames/:id
 const getVideogameById = async (id) => {
-  const response = (await axios(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)).data
-  const { background_image, name, genres, description, released, rating, parent_platforms } = response
+  const response = (
+    await axios(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+  ).data;
+  const {
+    background_image,
+    name,
+    genres,
+    description,
+    released,
+    rating,
+    parent_platforms,
+  } = response;
 
   const videogame = {
     background_image,
@@ -27,22 +60,17 @@ const getVideogameById = async (id) => {
     description,
     released,
     rating,
-    genre: genres.map(g => g.name),
-    platforms: parent_platforms.map(p => p.platform.name)   
+    genre: genres.map((g) => g.name),
+    platforms: parent_platforms.map((p) => p.platform.name),
   };
 
   return videogame;
 };
 
-const getVideogameByNameFromAPI = async (name) => {
-  const response = (await axios(`https://api.rawg.io/api/games?search=${game}&key=${API_KEY}`)).data.results
-  const videogames = response.map(e => e.name)
-  return videogames // acá voy a tener 20 videojuegos. Buscar la forma de limitarlo a que me lleguen 15
-}
 
 
 module.exports = {
   getAllFromAPI,
   getVideogameById,
   getVideogameByNameFromAPI,
-}
+};

@@ -1,8 +1,8 @@
-const { getVideogames, createVideogame } = require("../controllers/videogamesController");
+const { getVideogames, getVideogamesByName } = require("../controllers/videogamesController");
 
 const router = require("express").Router();
 
 router.get('/', getVideogames)
-router.post('/', createVideogame)
+router.get('/', getVideogamesByName)
 
 module.exports = router

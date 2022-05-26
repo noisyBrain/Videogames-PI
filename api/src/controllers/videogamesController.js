@@ -12,18 +12,24 @@ const getAll = async () => {
   return allVideogames;
 };
 
-/*router.get("/",*/ 
+const getAllByName = async (name) => {
+
+    const getFromAPI = await getVideogameByNameFromAPI(name)
+    const getFromDB = await getVideogameByNameFromDB(name)
+    const all = getFromAPI.concat(getFromDB)
+
+    return all;
+  };
+
 // ruteo get para traer todo (API y DB) al cliente 
+// si llega name por query que pase a la siguiente (que es la que trae por name)
 const getVideogames = async (req, res, next) => {
 
-  if (req.query.name) next()
+  if (req.query.name) return next()
 
   try {
     const allVideogames = await getAll();
-
-    videogameByName.length ? // revisar que tengo que traerme 15 coincidencias. Ver cómo hacer
-    res.json(videogameByName) :
-    res.status(404).send('Videogame not found... :(')
+    console.log(allVideogames.length)
     return res.json(allVideogames)
 
   } catch (error) {
@@ -31,27 +37,24 @@ const getVideogames = async (req, res, next) => {
   }
 };
 
-// en la siguiente función tengo que buscar 
+// busca en endpoint los games por nombre
 const getVideogamesByName = async (req, res, next) => {
   const { name } = req.query;
 
   try {
-    const videogameByName = allVideogames.filter((videogame) => // esto lo tengo que borrar y tengo que llamar a todo lo que me traiga desde la api y la base de datos con las cinco llamadas de una para lograr traerme los 100 videojuegos
-    videogame.name.toLowerCase().includes(name.toLowerCase())
-    );
+    res.json(await getAllByName(name))
 
   } catch (error) {
     next(error)
   }
 }
 
-/*router.get('/:id',*/
-// me traigo sólo lo que coincida con el id
+// busca videogame por id
 const getVideogamesById = async (req, res, next) => {
   const { id } = req.params
+  const regex = /([a-zA-Z]+([0-9]+)+)/
 
   try {
-    const regex = /([a-zA-Z]+([0-9]+[a-zA-Z]+)+)/
     if (regex.test(id)) {
       const fromDB = await videogameByIdDB(id)
       return res.json(fromDB)
@@ -77,15 +80,19 @@ const gamesGenre = async (req, res, next) => {
 };
 
 const createVideogame = async (req, res, next) => {
-  const { name, description, released, rating } = req.body;
+  const { name, description, released, rating, platforms } = req.body;
 
+  
   try {
+    if (!name || !description || !released || !rating) res.status(404).send('Faltan propiedades obligatorias')
+
     const videogameCreated = await Videogame.findOrCreate({
       where: {
         name,
         description,
         released,
         rating,
+        platforms,
       }
     });
     return res.status(201).json(videogameCreated)
@@ -103,6 +110,14 @@ const crear = async () => {
   return tabla;
 };
 
+const crearOtro = async () => {
+  const tabla = await Videogame.create({
+    name: "OtroTomi",
+    description: "esta es una prueba 2",
+    platforms: ["solo PC"],
+  });
+  return tabla;
+};
 // const genre = async () => {
 //   const tabla2 = await Genre.create({
 //     name: ["Drama"],
@@ -125,8 +140,10 @@ const crear = async () => {
 
 module.exports = {
   getVideogames,
+  getVideogamesByName,
   getVideogamesById,
   crear,
+  crearOtro,
   gamesGenre,
   createVideogame,
   // genre,
