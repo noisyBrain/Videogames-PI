@@ -1,5 +1,7 @@
 const axios = require("axios");
-const { API_KEY, Genre, Videogame } = require("../db");
+const { Genre, Videogame } = require("../db");
+require('dotenv').config();
+const { API_KEY } = process.env
 
 // para /videogames -> trae todo
 const getAllFromDB = async () => {
@@ -27,7 +29,7 @@ const getGenreFromAPIToDB = async () => {
   const response = (await axios(`https://api.rawg.io/api/genres?key=${API_KEY}`)).data.results
     .map((g) => g.name)
     .map((e) => {
-      Genre.findOrCreate({
+      return Genre.findOrCreate({
         where: { name: e },
       });
     });

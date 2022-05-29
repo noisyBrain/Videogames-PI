@@ -1,5 +1,4 @@
-const router = require("express").Router();
-const { Genre, Videogame } = require("../db");
+const { Videogame } = require("../db");
 const { getAllFromAPI, getVideogameById, getVideogameByNameFromAPI } = require("../services/getFromAPI");
 const { getAllFromDB, videogameByIdDB, getGenreFromAPIToDB, getVideogameByNameFromDB }= require("../services/getFromDB");
 
@@ -118,25 +117,6 @@ const crearOtro = async () => {
   });
   return tabla;
 };
-// const genre = async () => {
-//   const tabla2 = await Genre.create({
-//     name: ["Drama"],
-//   })
-//   return tabla2;
-// }
-
-// const otroGenre = async () => {
-//   return Genre.create({
-//     name: ["Acción", "Policial"]
-//   })
-// }
-
-// const masGenre = async () => {
-//   return Genre.create({
-//     name: ["Romántica", "Psicológica"]
-//   })
-// }
-
 
 module.exports = {
   getVideogames,
@@ -146,7 +126,5 @@ module.exports = {
   crearOtro,
   gamesGenre,
   createVideogame,
-  // genre,
-  // otroGenre,
-  // masGenre,
+
 };
