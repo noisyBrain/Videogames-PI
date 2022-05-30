@@ -16,8 +16,8 @@ const SearchBar = ({ onSearch }) => {
 
     <div>
 
-    <input type='search' value={state} onChange={e => handleOnChange(e.target.value)} />
-    <input type='submit' onClick={() => onSearch(state)}/>
+      <input type='search' value={state} onChange={(e) => handleOnChange(e.target.value)} />
+      <input type='submit' onClick={() => onSearch(state)}/>
     
     </div>
   )

@@ -1,27 +1,27 @@
 import { useState, useSelector } from 'react';
 
-const Pagination = () => {
+const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
 
-  const [state, setState] = useState({
-    previous: '',
-    next: '',
-  });
+  const pageNumbers = [];
 
-  const handlePreviousOnClick = e => {
-    e.preventDefault();
-    setState(state.previous)
-  }
-
-  const handleNextOnClick = e => {
-    e.preventDefault();
-    setState()
+  for (let i = 1; i <= Math.ceil(totalVideogames / videogamesPerPage); i++) {
+    pageNumbers.push(i)
   }
 
   return (
-    <>
-      <button onClick={handlePreviousOnClick}>Previuos</button>
-      <button onClick={handleNextOnClick}>Next</button>
-    </>
+    <nav>
+      <ul>
+        {
+          pageNumbers?.map(number => (
+            <li key={number}>
+              <a onClick={() => paginate(number)}>
+                {number}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
   );
 };
 

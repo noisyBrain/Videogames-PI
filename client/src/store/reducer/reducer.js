@@ -2,8 +2,7 @@ import { GET_ALL_VIDEOGAMES, GET_VIDEOGAME_BY_NAME, ORDER_BY_GENRE, ORDER_ALPHAB
 
 const initialState = {
   videogames: [],
-  previous: '',
-  next: ''
+  genres: [],
 }
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -26,6 +25,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
           if (a.name < b.name) return 1
           return 0
         })
+      }
+    case ORDER_BY_GENRE:
+      return {
+        ...state,
+        genres: payload,
       }
     default:
       return {

@@ -42,8 +42,25 @@ export const getVideogameByName = (name) => {
 //   }
 // }
 
-export const orderByGenre = (payload) => {
-  return {
-    type: ORDER_BY_GENRE,
+export const orderByGenre = () => {
+  return (dispatch) => {
+    return fetch(`http://localhost:3001/genres`)
+    .then(response => response.json())
+    .then(data => dispatch({ type: ORDER_BY_GENRE, payload: data }))
+    .catch(error => {
+      console.error(error)
+    })
   }
 }
+
+// export const orderByGenre = () => {
+//   return async (dispatch) => {
+//     try {
+//       const response = (await axios(`http://localhost:3001/genres`)).data
+//       return dispatch({ type: ORDER_BY_GENRE, payload: response})
+      
+//     } catch (error) {
+//       console.error(error)
+//     }
+//   }
+// }
