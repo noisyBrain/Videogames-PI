@@ -6,9 +6,9 @@ const Videogame = ({ name, image, genre }) => {
 
   return (
     <div style={{width: "6rem", height: "6rem", display:"flex", margin: "20px", position: "relative", justifyContent: "space-between"}}>
-      <h4>{name}</h4>
+      <h3>{name}</h3>
       <img src={image} alt='not found'/>
-      <h4>{genre}</h4>
+      <h5>{genre}</h5>
     </div>
   )
 }

@@ -10,7 +10,6 @@ const SearchBar = ({ onSearch }) => {
   const handleOnChange = (e) => {
     setState(e)
   }
-
   
   return (
 

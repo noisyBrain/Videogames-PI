@@ -4,17 +4,20 @@ import "./App.css";
 import Landing from "./components/Landing/Landing.jsx";
 // import Navbar from "./components/Nav/Navbar.jsx";
 import Home from "./components/Home/Home";
+import CreateForm from "./components/Form/CreateForm";
+import VideogameDetail from "./components/Home/VideogameDetail";
 
 function App() {
   return (
     <div className="App">
-    <Routes>
+      <Routes>
+      
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/videogame/:id" element={<VideogameDetail />} />
+        <Route path="/videogame/create" element={<CreateForm />} />
 
-      <Route path="/" element={<Landing />} />
-      {/* <Route path="/home" element={<Navbar />} /> */}
-      <Route path="/home" element={<Home />} />
-
-    </Routes>
+      </Routes>
     </div>
   );
 }

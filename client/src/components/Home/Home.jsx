@@ -1,54 +1,75 @@
 /* eslint-disable no-unused-vars */
 
-import { Link } from 'react-router-dom'
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllVideogames, getVideogameByName } from '../../store/actions';
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllVideogames, getVideogameByName, orderAlphabetically, orderByCreation, orderByRating } from "../../store/actions";
 
-
-import Genre from '../Order/OrderByGenres';
-import Order from '../Order/OrderVideogames';
-import Pagination from '../Pagination/Pagination';
-import SearchBar from '../Search/SearchVideogames';
-import Videogames from './Videogames';
+import FilterByGenre from "../Filter/FilterByGenre";
+import Order from "../Order/OrderVideogames";
+import Pagination from "../Pagination/Pagination";
+import SearchBar from "../Search/SearchVideogames";
+import Videogames from "./Videogames";
 
 const Home = () => {
+  const videogames = useSelector((state) => state.videogames);
+  const dispatch = useDispatch();
 
-  const videogames = useSelector(state => state.videogames)
-  const dispatch = useDispatch()
+  const [currentPage, setCurrentPage] = useState(1);
+  const [videogamesPerPage] = useState(15);
+  const [order, setOrder] = useState('')
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const [videogamesPerPage] = useState(15)
+  const indexOfLastVideogame = currentPage * videogamesPerPage;
+  const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
+  const currentVideogames = videogames.slice(
+    indexOfFirstVideogame,
+    indexOfLastVideogame
+  );
 
-  const indexOfLastVideogame = currentPage * videogamesPerPage
-  const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage
-  const currentVideogames = videogames.slice(indexOfFirstVideogame, indexOfLastVideogame)
-
-  const handleOnClick = e => {
+  const handleOnClick = (e) => {
     e.preventDefault();
-    dispatch(getAllVideogames())
+    dispatch(getAllVideogames());
+  };
+
+  const handleOnSearch = (name) => {
+    dispatch(getVideogameByName(name));
+  };
+
+  const handleAlphabetically = (e) => {
+    dispatch(orderAlphabetically(e))
+    setCurrentPage(1)
+    setOrder(`Ordered ${e}`)
   }
 
-  const handleOnSearch = name => {
-    dispatch(getVideogameByName(name))
+  const handleRating = (e) => {
+    dispatch(orderByRating(e))
+    setCurrentPage(1)
+    setOrder(`Ordered ${e}`)
   }
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const handleCreation = (e) => {
+    dispatch(orderByCreation(e))
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
   return (
     <div>
-
-      <Link to='/videogames'>Create your own videogame!</Link>
+      <Link to="/videogame/create">Create your own videogame!</Link>
       <h1>Videogames Page</h1>
-      <Genre />
-      <Order />
+      <FilterByGenre />
+      <Order onAlph={handleAlphabetically} onRating={handleRating} onCreation={handleCreation}/>
       <SearchBar onSearch={handleOnSearch} />
-      <Pagination videogamesPerPage={videogamesPerPage} totalVideogames={videogames.length} paginate={paginate}/>
+      <button onClick={(e) => handleOnClick(e)}>Refresh</button>
+      <Pagination
+        videogamesPerPage={videogamesPerPage}
+        totalVideogames={videogames.length}
+        paginate={paginate}
+      />
       <Videogames videogames={currentVideogames} />
-      <button onClick={e => handleOnClick(e)}>Refresh</button>
-
     </div>
-  )
-}
+  );
+};
 
 export default Home;
