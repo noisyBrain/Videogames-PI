@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Op } = require('sequelize')
 const { Genre, Videogame } = require("../db");
 require('dotenv').config();
 const { API_KEY } = process.env
@@ -41,7 +42,11 @@ const getGenreFromAPIToDB = async () => {
 // /videogames/name
 const getVideogameByNameFromDB = async (name) => {
   const videogame = await Videogame.findAll({
-    where: { name }
+    where: {
+      name: {
+        [Op.iLike]: `%${name}%`,
+      },
+    },
   });
   return videogame;
 };

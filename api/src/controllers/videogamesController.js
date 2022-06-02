@@ -15,7 +15,7 @@ const getAllByName = async (name) => {
 
     const getFromAPI = await getVideogameByNameFromAPI(name)
     const getFromDB = await getVideogameByNameFromDB(name)
-    const all = getFromAPI.concat(getFromDB)
+    const all = getFromDB.concat(getFromAPI)
 
     return all;
   };

@@ -10,9 +10,12 @@ const getAllFromAPI = async () => {
   for (let i = 2; i <= 6; i++) {
     response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data
     videogamesFromAPI.push(response.results.map((ele) => ({
+      id: ele.id,
       background_image: ele.background_image,
       name: ele.name,
-      genre: ele.genres.map((g) => g.name),
+      genre: ele.genres?.map((g) => g.name),
+      rating: ele.rating,
+      platforms: ele.platforms?.map(p => p.platform.name)
       }))
     );
     videogamesFromAPI = videogamesFromAPI.flat();
@@ -24,26 +27,24 @@ const getAllFromAPI = async () => {
 // GET /videogames?name=...
 const getVideogameByNameFromAPI = async (name) => {
   const response = (
-    await axios(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`)).data.results;
+    await axios(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}&page_size=15`)).data.results;
 
   const videogames = response.map(e => ({
-    // id: e.id,
+    id: e.id,
     background_image: e.background_image,
     name: e.name,
-    genre: e.genres.map(g => g.name),
-    // released: e.released,
-    // rating: e.rating,
-    // platforms: e.platforms.map(p => p.platform.name)
+    genre: e.genres?.map(g => g.name),
+    released: e.released,
+    rating: e.rating,
+    platforms: e.platforms?.map(p => p.platform.name),
   }));
-  return videogames; // acá voy a tener 20 videojuegos. Buscar la forma de limitarlo a que me lleguen 15
+  return videogames; 
 };
 
 
 // GET /videogames/:id
 const getVideogameById = async (id) => {
-  const response = (
-    await axios(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-  ).data;
+  const response = (await axios(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)).data;
   const {
     background_image,
     name,
@@ -60,8 +61,8 @@ const getVideogameById = async (id) => {
     description,
     released,
     rating,
-    genre: genres.map((g) => g.name),
-    platforms: parent_platforms.map((p) => p.platform.name),
+    genre: genres?.map((g) => g.name),
+    platforms: parent_platforms?.map((p) => p.platform.name),
   };
 
   return videogame;

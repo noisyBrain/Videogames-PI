@@ -38,6 +38,11 @@ module.exports = (sequelize) => {
       background_image: {
         type: DataTypes.STRING,
       },
+      createdBy: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      }
     },
     {
       timestaps: false,
