@@ -1,6 +1,6 @@
-const { Videogame } = require("../db");
+const { Genre, Videogame } = require("../db");
 const { getAllFromAPI, getVideogameById, getVideogameByNameFromAPI } = require("../services/getFromAPI");
-const { getAllFromDB, videogameByIdDB, getGenreFromAPIToDB, getVideogameByNameFromDB }= require("../services/getFromDB");
+const { getAllFromDB, videogameByIdDB, getGenres, getVideogameByNameFromDB, getPlatforms }= require("../services/getFromDB");
 
 // me traigo todo lo que tenga en la API y en la DB
 const getAll = async () => {
@@ -70,34 +70,53 @@ const getVideogamesById = async (req, res, next) => {
 
 const gamesGenre = async (req, res, next) => {
   try {
-    const prueba = await getGenreFromAPIToDB()
-    return res.json(prueba)
+    const genresFromDB = await getGenres()
+    return res.json(genresFromDB)
 
   } catch (error) {
     next(error)
   }
 };
 
+const gamesPlatforms = async (req, res, next) => {
+  try {
+    const platformsFromDB = await getPlatforms()
+    return res.json(platformsFromDB)
+
+  } catch (error) {
+    next(error)
+    
+  }
+}
+
 const createVideogame = async (req, res, next) => {
-  const { name, description, released, rating, platforms } = req.body;
+  const { name, description, released, rating, platforms, genre, createdBy } = req.body;
 
   
   try {
     if (!name || !description || !released || !rating) res.status(404).send('Faltan propiedades obligatorias')
 
-    const videogameCreated = await Videogame.findOrCreate({
-      where: {
-        name,
+    const videogameCreated = await Videogame.create({
+        createdBy,
         description,
-        released,
-        rating,
+        name,
         platforms,
+        rating,
+        released,
+    });
+
+    const genresInDB = await Genre.findAll({
+      where: {
+        name: genre
       }
     });
+    videogameCreated.addGenre(genresInDB)
+
     return res.status(201).json(videogameCreated)
-  } catch (error) {
+  } catch(error) {
     next(error)
   }
+
 };
 
 const crear = async () => {
@@ -122,9 +141,10 @@ module.exports = {
   getVideogames,
   getVideogamesByName,
   getVideogamesById,
-  crear,
-  crearOtro,
   gamesGenre,
+  gamesPlatforms,
   createVideogame,
+  crear,
+  crearOtro
 
 };

@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Op } = require('sequelize')
-const { Genre, Videogame } = require("../db");
+const { Genre, Platform: Platform, Videogame } = require("../db");
 require('dotenv').config();
 const { API_KEY } = process.env
 
@@ -26,7 +26,7 @@ const videogameByIdDB = async (id) => {
 };
 
 // genres from api to db
-const getGenreFromAPIToDB = async () => {
+const getGenres = async () => {
   const response = (await axios(`https://api.rawg.io/api/genres?key=${API_KEY}`)).data.results
     .map((g) => g.name)
     .map((e) => {
@@ -38,6 +38,21 @@ const getGenreFromAPIToDB = async () => {
 
   return allGenres;
 };
+
+// platfoms from api to db
+const getPlatforms = async () => {
+  const response = (await axios(`https://api.rawg.io/api/platforms?key=${API_KEY}`)).data.results
+  .map(platform => platform.name)
+  .map(p => {
+    return Platform.findOrCreate({
+      where: { name: p },
+    });
+  });
+  const allPlatforms = await Platform.findAll();
+
+  return allPlatforms;
+};
+
 
 // /videogames/name
 const getVideogameByNameFromDB = async (name) => {
@@ -54,6 +69,7 @@ const getVideogameByNameFromDB = async (name) => {
 module.exports = {
   getAllFromDB,
   videogameByIdDB,
-  getGenreFromAPIToDB,
+  getGenres,
+  getPlatforms,
   getVideogameByNameFromDB
 };

@@ -13,7 +13,7 @@ const getAllFromAPI = async () => {
       id: ele.id,
       background_image: ele.background_image,
       name: ele.name,
-      genre: ele.genres?.map((g) => g.name),
+      genres: ele.genres?.map((g) => g.name),
       rating: ele.rating,
       platforms: ele.platforms?.map(p => p.platform.name)
       }))
@@ -33,7 +33,7 @@ const getVideogameByNameFromAPI = async (name) => {
     id: e.id,
     background_image: e.background_image,
     name: e.name,
-    genre: e.genres?.map(g => g.name),
+    genres: e.genres?.map(g => g.name),
     released: e.released,
     rating: e.rating,
     platforms: e.platforms?.map(p => p.platform.name),
@@ -61,7 +61,7 @@ const getVideogameById = async (id) => {
     description,
     released,
     rating,
-    genre: genres?.map((g) => g.name),
+    genres: genres?.map((g) => g.name),
     platforms: parent_platforms?.map((p) => p.platform.name),
   };
 
