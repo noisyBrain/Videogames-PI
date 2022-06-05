@@ -1,29 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGenres, filterByGenre } from "../../store/actions";
 
-const FilterByGenre = () => {
+import style from './filter.module.css';
+
+const FilterByGenre = ({ select, setSelect }) => {
 
   const dispatch = useDispatch();
-  const genre = useSelector((state) => state.genres);
+  const genres = useSelector((state) => state.genres);
 
   const handleFilterByGenre = (e) => {
-    dispatch(filterByGenre(e));
+    dispatch(filterByGenre(e.target.value));
+    setSelect({
+      ...select,
+      genre: e.target.value,
+    })
   };
-
+  
   useEffect(() => {
     dispatch(getAllGenres());
-  }, []);
+  }, [dispatch]);
+
+  console.log("lo que viene del genre del store -> ", genres)
+
 
   return (
-    <select
+    <select 
+      value={select.genre}
       name="genres"
       id="category/genres"
-      onChange={(e) => handleFilterByGenre(e.target.value)}
+      onChange={handleFilterByGenre}
     >
-      <option value={-1}>Select an option</option>
-      {genre?.map((v) => (
-        <option key={v.id} value={v.name}>
+      <option>Genres</option>
+      {genres?.map((v) => (
+        <option key={v.id}>
           {v.name}
         </option>
       ))}

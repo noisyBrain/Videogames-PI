@@ -1,0 +1,37 @@
+.main_container {
+  display: flex;
+  position: relative;
+  margin: 0.5rem;
+  letter-spacing: .15px;
+}
+
+.card {
+  width: 50rem;
+  /* padding: 5px; */
+  border-radius: 1rem;
+  overflow: visible;
+  background: #20202081;
+  position: relative;
+}
+
+.name {
+  font-size: 2rem;
+  margin: 1.5rem;
+  font-family: Raleway;
+}
+
+.img {
+  max-width: 25rem;
+}
+
+.section_description {
+  width: 100%;
+  background-image: repeating-radial-gradient(rgba(224, 196, 196, 0.144), rgba(90, 89, 102, 0.151), rgba(41, 69, 77, 0));
+}
+
+.description {
+  font-size: 0.9rem;
+  text-align: justify;
+  letter-spacing: 0.1px;
+  padding: 1rem 2.5rem;
+}

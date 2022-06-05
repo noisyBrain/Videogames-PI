@@ -1,0 +1,8 @@
+.main_container {
+  display: grid; 
+  grid-auto-rows: 1fr; 
+  grid-template-columns: 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+  gap: 1rem 1rem; 
+  margin: 2.5rem;
+}

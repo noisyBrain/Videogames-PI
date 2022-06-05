@@ -1,0 +1,37 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+  /* background-color: #101010; */
+}
+
+.ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  /* background-color: #b17c7c; */
+  background-color: #313131;
+}
+
+.ul a {
+  margin: 0.25rem;
+  padding: 0.2rem 1rem;
+  border-radius: 0.5rem;
+  color: #ededed;
+  cursor: pointer;
+}
+
+.ul li a {
+  background-color: #363636;
+  border: 3px solid #303030;
+}
+
+.ul li:hover a {
+  border-color: #ac3343;
+  color: white;
+}
+

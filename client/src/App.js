@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Landing from "./components/Landing/Landing.jsx";
-// import Navbar from "./components/Nav/Navbar.jsx";
 import Home from "./components/Home/Home";
 import CreateForm from "./components/Form/CreateForm";
 import VideogameDetail from "./components/Home/VideogameDetail";

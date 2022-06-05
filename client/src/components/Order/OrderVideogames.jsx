@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getAllVideogames, orderAlphabetically, orderByRating } from "../../store/actions";
-
-const Order = ({ onAlph, onRating, onCreation }) => {
+const Order = ({ onAlph, onRating, onCreation, select }) => {
 
   return (
     <>
-    <select name='' id='order/alphabetically' onChange={e => onAlph(e.target.value)}>
-      <option value="alphabetically" >Alphabetical</option>
-      <option value="ascending">Ascending</option>
-      <option value="descending">Descending</option>
+    <select value={select.alph} name='' id='order/alphabetically' onChange={onAlph}>
+      <option>Alphabetical</option>
+      <option>Ascending</option>
+      <option>Descending</option>
     </select>
 
-    <select name='' id='order/rating' onChange={e => onRating(e.target.value)}>
-      <option value="rating">Rating</option>
-      <option value="ascending">Ascending</option>
-      <option value="descending">Descending</option>
+    <select value={select.rating} name='' id='order/rating' onChange={onRating}>
+      <option>Rating</option>
+      <option>Ascending</option>
+      <option>Descending</option>
     </select>
 
-    <select name='' id='order/created/existing' onChange={e => onCreation(e.target.value)}>
-      <option value="existing">Existing</option>
-      <option value="created">Created</option>
+    <select value={select.source} name='' id='order/created/existing' onChange={onCreation}>
+      <option>Source</option>
+      <option>Existing</option>
+      <option>Created</option>
     </select>
     </>
   );

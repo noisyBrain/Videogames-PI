@@ -8,6 +8,7 @@ import {
   ORDER_BY_CREATION, 
   GET_DETAIL,
   GET_PLATFORMS,
+  POST_VIDEOGAME,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,7 +17,6 @@ const initialState = {
   detail: {},
   genres: [],
   platforms: []
-  // videogamesByGenre: []
 }
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -34,9 +34,9 @@ export default function rootReducer(state = initialState, { type, payload }) {
       }
 
     case ORDER_ALPHABETICALLY:
-      const orderAlphabetically = payload === "alphabetically" ? state.allVideogames :
+      const orderAlphabetically = payload === "Alphabetically" ? state.allVideogames :
 
-      payload === 'ascending' ?
+      payload === 'Ascending' ?
       state.videogames.sort( (a,b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0) 
       :
       state.videogames.sort( (a,b) => a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
@@ -48,9 +48,9 @@ export default function rootReducer(state = initialState, { type, payload }) {
 
     case ORDER_BY_RATING:
 
-      const orderRating = payload === "rating" ? state.allVideogames :
+      const orderRating = payload === "Rating" ? state.allVideogames :
 
-        payload === "ascending" ?
+        payload === "Ascending" ?
         state.videogames.sort( (a,b) => a.rating > b.rating ? 1 : a.rating < b.rating ? -1 : 0)
         :
         state.videogames.sort( (a,b) => a.rating > b.rating ? -1 : a.rating < b.rating ? 1 : 0)
@@ -61,7 +61,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
       }
     
     case ORDER_BY_CREATION:
-      const orderCreation = payload === "created" ? state.allVideogames.filter(v => v.createdBy)
+      const orderCreation = payload === "Created" ? state.allVideogames.filter(v => v.createdBy)
       :
       state.allVideogames.filter(v => !v.createdBy)
 
@@ -79,11 +79,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case FILTER_BY_GENRE:
 
       const allVideogames = state.allVideogames
-      const filteredByGenre = payload === "-1" ? allVideogames : allVideogames?.filter(el => el.genre && (el.genre).includes(payload))
+      const filteredByGenre = payload === "Genres" ? allVideogames : allVideogames?.filter(el => el.genres && (el.genres).includes(payload))
 
       return {
         ...state,
         videogames: filteredByGenre,
+        consola: console.log("filteredByGenre (reducer) -> ", filteredByGenre)
       }
     
     case GET_DETAIL:
@@ -94,7 +95,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case GET_PLATFORMS:
       return {
         ...state,
-        platforms: payload.map(p => p.name)
+        platforms: payload,
+      }
+    case POST_VIDEOGAME:
+      return {
+        ...state,
       }
     default:
       return {

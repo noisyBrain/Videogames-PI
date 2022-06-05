@@ -8,7 +8,6 @@ import {
   ORDER_BY_RATING,
   ORDER_BY_CREATION,
   GET_DETAIL,
-  CREATE_VIDEOGAME,
   GET_PLATFORMS,
 } from "./actionTypes";
 
@@ -118,14 +117,19 @@ export const getDetail = id => {
 
 export const getPlatforms = () => {
   return async dispatch => {
-    const response = (await axios(`https://api.rawg.io/api/platforms?key=233e7609748b485bbf33ebb04daece71`)).data.results
-    dispatch({ type: GET_PLATFORMS, payload: response })
+    try {
+      const response = (await axios(`http://localhost:3001/platforms`)).data
+      dispatch({ type: GET_PLATFORMS, payload: response })
+      
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 
-export const postVideogame = () => {
-  return async dispatch => {
-    const response = await axios.post(`http://localhost:3001/videogame`) 
-    dispatch({ type: CREATE_VIDEOGAME, payload: response })
+export const postVideogame = (payload) => {
+  return async () => {
+    const response = await axios.post('http://localhost:3001/videogame', payload) 
+    return response;
   }
 }

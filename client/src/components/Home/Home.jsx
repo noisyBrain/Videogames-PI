@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllVideogames, getVideogameByName, orderAlphabetically, orderByCreation, orderByRating } from "../../store/actions";
 
+import style from './home.module.css';
 import FilterByGenre from "../Filter/FilterByGenre";
 import Order from "../Order/OrderVideogames";
 import Pagination from "../Pagination/Pagination";
@@ -15,9 +16,17 @@ const Home = () => {
   const videogames = useSelector((state) => state.videogames);
   const dispatch = useDispatch();
 
+
   const [currentPage, setCurrentPage] = useState(1);
   const [videogamesPerPage] = useState(15);
-  const [order, setOrder] = useState('')
+  const [select, setSelect] = useState({
+    alph: 'Alphabetical',
+    rating: 'Rating',
+    source: 'Source',
+    genre: 'Genres'
+  })
+
+  console.log("current page -> ", currentPage)
 
   const indexOfLastVideogame = currentPage * videogamesPerPage;
   const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
@@ -27,39 +36,64 @@ const Home = () => {
   );
 
   const handleOnClick = (e) => {
-    e.preventDefault();
-    dispatch(getAllVideogames());
+    dispatch(getAllVideogames());    
+    setCurrentPage(1)
+    setSelect({    
+      alph: 'Alphabetical',
+      rating: 'Rating',
+      source: 'Source',
+      genre: 'Genres',
+    })
   };
 
   const handleOnSearch = (name) => {
-    dispatch(getVideogameByName(name));
+    name 
+    ? dispatch(getVideogameByName(name)) 
+    : dispatch(getAllVideogames()) 
   };
 
   const handleAlphabetically = (e) => {
-    dispatch(orderAlphabetically(e))
+    dispatch(orderAlphabetically(e.target.value))
     setCurrentPage(1)
-    setOrder(`Ordered ${e}`)
+    setSelect({
+      ...select,
+      alph: e.target.value
+    })
   }
 
   const handleRating = (e) => {
-    dispatch(orderByRating(e))
+    dispatch(orderByRating(e.target.value))
     setCurrentPage(1)
-    setOrder(`Ordered ${e}`)
+    setSelect({
+      ...select,
+      rating: e.target.value
+    })
   }
 
   const handleCreation = (e) => {
-    dispatch(orderByCreation(e))
+    dispatch(orderByCreation(e.target.value))
+    setCurrentPage(1)
+    setSelect({
+      ...select,
+      source: e.target.value
+    })
   }
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
   return (
-    <div>
-      <Link to="/videogame/create">Create your own videogame!</Link>
-      <h1>Videogames Page</h1>
-      <FilterByGenre />
-      <Order onAlph={handleAlphabetically} onRating={handleRating} onCreation={handleCreation}/>
+    <div className={style.main_container}>
+      <h1 className={style.title}>Videogames Page</h1>
+
+      <nav className={style.navbar}>
+
+        <Link to="/videogame/create"><button className={style.create}>Create your own videogame</button>!</Link>
+        <FilterByGenre select={select} setSelect={setSelect}/>
+        <Order select={select} onAlph={handleAlphabetically} onRating={handleRating} onCreation={handleCreation}/>
+
+      </nav>
+
       <SearchBar onSearch={handleOnSearch} />
       <button onClick={(e) => handleOnClick(e)}>Refresh</button>
       <Pagination

@@ -1,4 +1,4 @@
-import { useState, useSelector } from 'react';
+import style from './pagination.module.css';
 
 const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
 
@@ -9,8 +9,9 @@ const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
   }
 
   return (
-    <nav>
-      <ul>
+    <section className={style.section}>
+
+      <ul className={style.ul}>
         {
           pageNumbers?.map(number => (
             <li key={number}>
@@ -21,7 +22,8 @@ const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
           ))
         }
       </ul>
-    </nav>
+
+    </section>
   );
 };
 
