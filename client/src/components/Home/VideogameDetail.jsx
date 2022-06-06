@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getDetail } from '../../store/actions';
+import { Link } from 'react-router-dom'; 
 
 import style from './videogameDetail.module.css'
 
@@ -23,13 +24,17 @@ const VideogameDetail = (props) => {
         <h1 className={style.name}>{videogameDetail.name}</h1>
         <img className={style.img} src={videogameDetail.background_image && videogameDetail.background_image} alt='not found'/>
         <h5 className={style.genres}>{videogameDetail.genres?.join(", ")}</h5>
-        <section className={style.section_description}>
           <p className={style.description}>{videogameDetail.description?.replace(/<[^>]+>/g, '')}</p>
+
+        <section className={style.info}>
+
+          <p className={style.released}>Released: {videogameDetail.released}</p>
+          <p className={style.rating}>Rating: {videogameDetail.rating} ★</p>
+          <p className={style.platforms}>Platforms: {videogameDetail.platforms?.join(", ")}</p>
+
         </section>
-        <p className={style.released}>{videogameDetail.released}</p>
-        <p className={style.rating}>{videogameDetail.rating}</p>
-        <p className={style.platforms}>{videogameDetail.platforms?.join(", ")}</p>
       </div>
+      <Link to='/home'><button className={style.button}>☚</button></Link>
     </div>
   )
 }

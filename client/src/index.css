@@ -8,7 +8,8 @@
 body {
   height: 100vh;
   background-color: #282c34;
-  background-image: linear-gradient(rgba(206, 0, 0, 0.411), rgb(62, 78, 88));
+  background-image: linear-gradient(rgb(139, 1, 1) 0%, rgba(101, 5, 5) 25%, rgba(109, 6, 6, 0.651) 40%, rgba(109, 3, 3, 0.692) 88%, rgba(137, 1, 1) 100%);
+  /* background-repeat: no-repeat; */
   font-family: Poppins, Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

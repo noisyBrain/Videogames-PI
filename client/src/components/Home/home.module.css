@@ -104,3 +104,19 @@
   position: relative;
   justify-content: center;
 }
+
+.button_refresh {
+  background-color: #ffffff0c;
+  color: #f1efa3;
+  width: 5rem;
+  height: 2rem;
+  border-style: none;
+  border-radius: 0.5rem;
+  /* box-shadow: rgba(212, 146, 3, 0.212) -5px 5px, rgba(237, 240, 46, 0.123) -10px 10px; */
+}
+
+.button_refresh:hover {
+  color: #f6bd00;
+  box-shadow: rgba(212, 146, 3, 0.212) -5px 5px, rgba(237, 240, 46, 0.123) -10px 10px;
+  transition: box-shadow ease 0.3s
+}

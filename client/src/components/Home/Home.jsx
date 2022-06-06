@@ -26,8 +26,6 @@ const Home = () => {
     genre: 'Genres'
   })
 
-  console.log("current page -> ", currentPage)
-
   const indexOfLastVideogame = currentPage * videogamesPerPage;
   const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
   const currentVideogames = videogames.slice(
@@ -35,7 +33,7 @@ const Home = () => {
     indexOfLastVideogame
   );
 
-  const handleOnClick = (e) => {
+  const handleOnClickRefresh = (e) => {
     dispatch(getAllVideogames());    
     setCurrentPage(1)
     setSelect({    
@@ -95,11 +93,12 @@ const Home = () => {
       </nav>
 
       <SearchBar onSearch={handleOnSearch} />
-      <button onClick={(e) => handleOnClick(e)}>Refresh</button>
+      <button className={style.button_refresh} onClick={(e) => handleOnClickRefresh(e)}>Refresh</button>
       <Pagination
         videogamesPerPage={videogamesPerPage}
         totalVideogames={videogames.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
       <Videogames videogames={currentVideogames} />
     </div>

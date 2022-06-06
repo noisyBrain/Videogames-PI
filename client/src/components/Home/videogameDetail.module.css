@@ -1,13 +1,14 @@
 .main_container {
   display: flex;
   position: relative;
-  margin: 0.5rem;
+  flex-direction: column;
+  margin: 1rem;
   letter-spacing: .15px;
 }
 
 .card {
   width: 50rem;
-  /* padding: 5px; */
+  padding: 5px;
   border-radius: 1rem;
   overflow: visible;
   background: #20202081;
@@ -22,11 +23,12 @@
 
 .img {
   max-width: 25rem;
+  margin-bottom: 0.3rem;
 }
 
-.section_description {
-  width: 100%;
-  background-image: repeating-radial-gradient(rgba(224, 196, 196, 0.144), rgba(90, 89, 102, 0.151), rgba(41, 69, 77, 0));
+.genres {
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
 .description {
@@ -34,4 +36,33 @@
   text-align: justify;
   letter-spacing: 0.1px;
   padding: 1rem 2.5rem;
+}
+
+.info {
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+  margin: 1rem;
+}
+
+.button {
+  background-color: rgba(194, 216, 0, 0);
+  width: 4rem;
+  height: 2rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(216, 140, 0);
+  box-shadow: rgba(212, 146, 3, 0.623) -5px 5px, rgba(237, 240, 46, 0.336) -10px 10px;
+  transition: box-shadow ease-in-out 0.5s;
+}
+
+.released,
+.rating,
+.platforms {
+  text-decoration: underline;
 }

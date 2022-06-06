@@ -1,6 +1,6 @@
 import style from './pagination.module.css';
 
-const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
+const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage  }) => {
 
   const pageNumbers = [];
 
@@ -15,7 +15,12 @@ const Pagination = ({ videogamesPerPage, totalVideogames, paginate }) => {
         {
           pageNumbers?.map(number => (
             <li key={number}>
-              <a onClick={() => paginate(number)}>
+              <a 
+                className=
+                {
+                  currentPage === number 
+                  ? `${style.active}` : ''
+                } onClick={() => paginate(number)}>
                 {number}
               </a>
             </li>

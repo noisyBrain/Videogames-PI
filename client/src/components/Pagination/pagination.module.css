@@ -6,6 +6,10 @@
   /* background-color: #101010; */
 }
 
+.active a {
+
+}
+
 .ul {
   list-style: none;
   display: flex;
@@ -30,8 +34,19 @@
   border: 3px solid #303030;
 }
 
+
+
 .ul li:hover a {
   border-color: #ac3343;
   color: white;
 }
+
+.ul li a.active {
+  border-color: #ac3343;
+}
+
+
+/* .ul li a .active{
+  border-color: red;
+} */
 

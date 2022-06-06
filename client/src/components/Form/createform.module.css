@@ -1,0 +1,48 @@
+.container_form {
+  margin: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 25px rgb(255, 187, 1)
+}
+
+.form {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 30rem;
+  height: 40rem;
+}
+
+.legend {
+  font-size: 1.25em;
+  padding: 0 .25em;
+  color: #999;
+}
+
+.label_form {
+  display: block;
+}
+
+.button_form {
+  display: block;
+}
+
+.input_form,
+.textarea_form {
+  background-color: #303030;
+  border: none;
+  width: 20rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: #f3d343;
+}
+
+.select_form {
+  background-color: #303030;
+  border: none;
+  width: 20rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: #997d02;
+}
