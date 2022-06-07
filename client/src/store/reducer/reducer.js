@@ -9,6 +9,8 @@ import {
   GET_DETAIL,
   GET_PLATFORMS,
   POST_VIDEOGAME,
+  SHOW_LOADER,
+  HIDE_LOADER,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   videogames: [],
   detail: {},
   genres: [],
-  platforms: []
+  platforms: [],
+  loading: false,
 }
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -84,7 +87,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         videogames: filteredByGenre,
-        consola: console.log("filteredByGenre (reducer) -> ", filteredByGenre)
+        // consola: console.log("filteredByGenre (reducer) -> ", filteredByGenre)
       }
     
     case GET_DETAIL:
@@ -100,6 +103,18 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case POST_VIDEOGAME:
       return {
         ...state,
+      }
+    case SHOW_LOADER:
+      return {
+        ...state,
+        loading: true,
+        // consola: console.log("loading show loader -> ", state.loading)
+      }
+    case HIDE_LOADER:
+      return {
+        ...state,
+        loading: false,
+        // consola: console.log("loading hide loader -> ", state.loading)
       }
     default:
       return {

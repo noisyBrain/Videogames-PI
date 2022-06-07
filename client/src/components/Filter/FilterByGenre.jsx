@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGenres, filterByGenre } from "../../store/actions";
 
-import style from './filter.module.css';
-
 const FilterByGenre = ({ select, setSelect }) => {
+
+
+  useEffect(() => {
+    console.log("Render del componente FilterGenre")
+  })
 
   const dispatch = useDispatch();
   const genres = useSelector((state) => state.genres);
@@ -16,12 +19,17 @@ const FilterByGenre = ({ select, setSelect }) => {
       genre: e.target.value,
     })
   };
+
+  const handleGetAllGenres = useCallback(() => {
+    dispatch(getAllGenres())
+  }, [dispatch])
   
   useEffect(() => {
-    dispatch(getAllGenres());
-  }, [dispatch]);
+    handleGetAllGenres()
+    return () => handleGetAllGenres() 
+  }, [dispatch, handleGetAllGenres]);
 
-  console.log("lo que viene del genre del store -> ", genres)
+  // console.log("lo que viene del genre del store -> ", genres)
 
 
   return (

@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import style from './search.module.css';
 
 
 const SearchBar = ({ onSearch }) => {
 
-  // const [state, setState] = useState('')
-
-  // const handleOnChange = (e) => {
-  //   setState(e)
-  // }
+  useEffect(() => {
+    console.log("Render del componente SearchBar")
+  })
   
   return (
 

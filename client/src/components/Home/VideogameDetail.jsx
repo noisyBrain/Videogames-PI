@@ -8,15 +8,19 @@ import style from './videogameDetail.module.css'
 
 const VideogameDetail = (props) => {
 
+  useEffect(() => {
+    console.log("Render del componente VideogameDetail")
+  })
   const dispatch = useDispatch()
   const { id } = useParams()
 
   const videogameDetail = useSelector(state => state.detail)
-  console.log("vg detail componente -> ", videogameDetail)
+  // console.log("vg detail componente -> ", videogameDetail)
 
   useEffect(() => {
     dispatch(getDetail(id))
-  }, [dispatch])
+    return () => dispatch(getDetail(id))
+  }, [dispatch, id])
 
   return (
     <div className={style.main_container}>

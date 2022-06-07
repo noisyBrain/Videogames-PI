@@ -33,6 +33,11 @@ const validate = (state) => {
 };
 
 const CreateForm = () => {
+
+  useEffect(() => {
+    console.log("Render del componente CreateForm")
+  })
+
   const navigate = useNavigate();
   const [state, setState] = useState({
     description: "",

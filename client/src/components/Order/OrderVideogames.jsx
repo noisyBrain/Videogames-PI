@@ -1,4 +1,10 @@
+import { useEffect } from 'react';
+
 const Order = ({ onAlph, onRating, onCreation, select }) => {
+
+  useEffect(() => {
+    console.log("Render del componente Order")
+  })
 
   return (
     <>

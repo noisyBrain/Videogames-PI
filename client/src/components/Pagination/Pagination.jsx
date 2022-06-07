@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
 import style from './pagination.module.css';
 
 const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage  }) => {
 
+
+  useEffect(() => {
+    console.log("Render del componente Pagination")
+  })
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalVideogames / videogamesPerPage); i++) {

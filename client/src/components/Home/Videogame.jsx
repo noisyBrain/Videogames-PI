@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import style from './videogame.module.css'
 
 const Videogame = ({ name, image, genres, id }) => {
+
+  useEffect(() => {
+    console.log("Render del componente Videogame")
+  })
 
   return (
 

@@ -5,14 +5,20 @@ import style from './videogames.module.css';
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getAllVideogames } from "../../store/actions";
+import { getAllVideogames, hideLoader, showLoader } from "../../store/actions";
+
 import Videogame from "./Videogame";
 
 const Videogames = ({ videogames }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("Render del componente Videogames")
+  })
+
+  useEffect(() => {
     dispatch(getAllVideogames());
+    dispatch(hideLoader())
   }, []);
 
   return (
