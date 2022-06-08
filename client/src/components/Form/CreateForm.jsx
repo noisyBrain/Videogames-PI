@@ -10,8 +10,9 @@ import style from "./createform.module.css";
 
 const validate = (state) => {
   const error = {};
-  if (!state.name || state.name.length < 4 || state.name.length > 30) {
-    error.name = "Name must be between 4 and 30 characters";
+  if (!state.name || state.name.length < 4 || state.name.length > 30 || !(/^[a-zA-Z]+$/).test(state.name)) {
+    error.name = "Name must be between 4 and 30 characters and have only letters";
+
   }
   if (
     !state.description ||
@@ -34,14 +35,11 @@ const validate = (state) => {
 
 const CreateForm = () => {
 
-  useEffect(() => {
-    console.log("Render del componente CreateForm")
-  })
-
   const navigate = useNavigate();
   const [state, setState] = useState({
     description: "",
     genres: [],
+    background_image: '',
     name: "",
     platforms: [],
     rating: 0,
@@ -61,33 +59,29 @@ const CreateForm = () => {
     dispatch(getPlatforms());
   }, []);
 
-
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
-    dispatch(postVideogame(state));
-    alert("Videogame creado con éxito!");
-    setState({
-      description: "",
-      genres: [],
-      name: "",
-      platforms: [],
-      rating: 0,
-      released: "",
-    });
-    setError(
-      validate({
-        ...state,
-        [e.target.name]: e.target.value,
-      })
-    );
-    navigate("/home");
+    if (state.description || state.name || state.rating > 0 || state.genres || state.platforms) {
+      dispatch(postVideogame(state));
+      alert("Videogame creado con éxito!");
+      setState({
+        description: "",
+        genres: [],
+        name: "",
+        platforms: [],
+        rating: 0,
+        released: "",
+      });
+      setError(
+        validate({
+          ...state,
+          [e.target.name]: e.target.value,
+        })
+      );
+      navigate("/home");
+      }
   };
 
-  useEffect(() => {
-    !error.name && setDisable(false)
-  }, [])
 
   const handleOnChange = (e) => {
     setState({
@@ -100,7 +94,6 @@ const CreateForm = () => {
         [e.target.name]: e.target.value,
       })
     ); 
-
   };
 
   const handleSelect = (e) => {
@@ -164,9 +157,17 @@ const CreateForm = () => {
           onChange={(e) => handleOnChange(e)}
         />
 
-        {/* </div> */}
 
-        {/* <div> */}
+        <label className={style.image_form}>Image: </label>
+        <input
+          className={style.input_form}
+          type="text"
+          value={state.image}
+          name="image"
+          placeholder="Image"
+          onChange={(e) => handleOnChange(e)}
+        />
+        {error.background_image && <span>{error.image}</span>}
 
         <label className={style.label_form}>Rating: </label>
         <input
@@ -179,9 +180,6 @@ const CreateForm = () => {
         />
         {error.rating && <span>{error.rating}</span>}
 
-        {/* </div> */}
-
-        {/* <div> */}
 
         <label className={style.label_form}>Genres: </label>
         <select
@@ -199,9 +197,6 @@ const CreateForm = () => {
         </select>
         {error.genres && <span>{error.genres}</span>}
 
-        {/* </div> */}
-
-        {/* <div> */}
 
         <label className={style.label_form}>Platforms: </label>
           <select
@@ -217,16 +212,20 @@ const CreateForm = () => {
               </option>
             ))}
           </select>
-        {error.platforms && <span>{error.platforms}</span>}
+        {error.platforms && <span>{error.platforms}</span>  }
 
-        {/* </div> */}
+        <div className={style.buttons}>
 
-        <button 
-          disabled={disable}
-          type="submit">Crear</button>
-        <Link to="/home">
-          <button className={style.button_form}>Go Back</button>
-        </Link>
+          <button 
+            className={style.button_form}
+            disabled={error.name || error.description || error.genres || error.platforms}
+            type="submit">Crear</button>
+          <Link to="/home">
+            <button className={style.button_form}>Go Back</button>
+          </Link>
+
+        </div>
+
       </form>
     </div>
   );
