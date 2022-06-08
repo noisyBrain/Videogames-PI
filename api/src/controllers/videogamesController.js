@@ -28,7 +28,6 @@ const getVideogames = async (req, res, next) => {
 
   try {
     const allVideogames = await getAll();
-    console.log(allVideogames.length)
     return res.json(allVideogames)
 
   } catch (error) {
@@ -119,23 +118,7 @@ const createVideogame = async (req, res, next) => {
 
 };
 
-// const crear = async () => {
-//   const tabla = await Videogame.create({
-//     name: "Tomi",
-//     description: "esta es una prueba",
-//     platforms: ["todas"],
-//   });
-//   return tabla;
-// };
 
-// const crearOtro = async () => {
-//   const tabla = await Videogame.create({
-//     name: "OtroTomi",
-//     description: "esta es una prueba 2",
-//     platforms: ["solo PC"],
-//   });
-//   return tabla;
-// };
 
 module.exports = {
   getVideogames,
@@ -144,7 +127,6 @@ module.exports = {
   gamesGenre,
   gamesPlatforms,
   createVideogame,
-  // crear,
-  // crearOtro
+
 
 };

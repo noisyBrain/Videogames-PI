@@ -8,8 +8,8 @@ const getAllFromAPI = async () => {
   let videogamesFromAPI = [];
 
   for (let i = 2; i <= 6; i++) {
-    response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data
-    videogamesFromAPI.push(response.results.map((ele) => ({
+    response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data.results
+    videogamesFromAPI.push(response.map((ele) => ({
       id: ele.id,
       background_image: ele.background_image,
       name: ele.name,
@@ -22,49 +22,6 @@ const getAllFromAPI = async () => {
   }
   return videogamesFromAPI;
 };
-
-
-
-//get videogames
-//   const getAllFromAPI = () => {
-//     let videogamesFromAPI = [];
-
-//     for (let i = 2; i <= 6; i++) {
-//         axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
-//           .then(response => {
-//             videogamesFromAPI.push(response.data.map(ele => ({
-//               id: ele.id,
-//               background_image: ele.background_image,
-//               name: ele.name,
-//               genres: ele.genres?.map((g) => g.name),
-//               rating: ele.rating,
-//               platforms: ele.platforms?.map(p => p.platform.name)
-//             }))
-//           )
-//         videogamesFromAPI = videogamesFromAPI.flat()
-//       })
-//       return videogamesFromAPI;
-//   }
-// }
-
-// get videogames
-  // const getAllFromAPI = () => {
-  //   let videogamesFromAPI = [];
-  //   for (let i = 2; i <= 6; i++) {
-  //     axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
-  //       .then(response => (
-  //         videogamesFromAPI.push(response.data.results.map(vg => ({
-  //           id: vg.id,
-  //           background_image: vg.background_image,
-  //           name: vg.name,
-  //           genres: vg.genres?.map(g => g.name),
-  //           rating: vg.rating,
-  //           platforms: vg.platforms?.map(p => p.platform.name)
-  //       })))))
-  //   } 
-  //   return videogamesFromAPI;
-  // }
-
 
 
 // GET /videogames?name=...
@@ -82,24 +39,6 @@ const getVideogameByNameFromAPI = async (name) => {
   }));
   return videogames; 
 };
-
-
-  // const getVideogameByNameFromAPI = (name) => {
-  //   axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}&page_size=15`).data.results
-  //     .then(response => {
-  //       response.map(e => ({
-  //         id: e.id,
-  //         background_image: e.background_image,
-  //         name: e.name,
-  //         genres: e.genres?.map(g => g.name),
-  //         released: e.released,
-  //         rating: e.rating,
-  //         platforms: e.platforms?.map(p => p.platform.name),
-  //       }));
-  //     })
-  //     .catch(error => console.error(error))
-  // }
-
 
 
 // GET /videogames/:id
