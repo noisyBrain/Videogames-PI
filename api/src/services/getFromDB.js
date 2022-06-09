@@ -6,15 +6,20 @@ const { API_KEY } = process.env
 
 // para /videogames -> trae todo
 const getAllFromDB = async () => {
-  const videogameFromDB = await Videogame.findAll({
+  let videogameFromDB = (await Videogame.findAll({
     include: {
       model: Genre,
       attributes: ["name"],
-      trought: {
+      through: {
         attributes: [],
       },
     },
-  });
+  })).map(e => e.toJSON())
+  
+  videogameFromDB = videogameFromDB.map(videogame => ({
+    ...videogame,
+    genres: videogame.genres.map(g => g.name),
+  }))
 
   return videogameFromDB;
 };
@@ -60,6 +65,13 @@ const getVideogameByNameFromDB = async (name) => {
     where: {
       name: {
         [Op.iLike]: `%${name}%`,
+      },
+    },
+    include: {
+      model: Genre,
+      attributes: ["name"],
+      through: {
+        attributes: [],
       },
     },
   });

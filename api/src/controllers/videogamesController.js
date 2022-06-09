@@ -84,20 +84,20 @@ const gamesPlatforms = async (req, res, next) => {
 
   } catch (error) {
     next(error)
-    
   }
 }
 
 const createVideogame = async (req, res, next) => {
-  const { name, description, released, rating, platforms, genre, createdBy } = req.body;
+  const { name, description, released, rating, platforms, genres, createdBy, background_image } = req.body;
 
   
   try {
-    if (!name || !description || !released || !rating) res.status(404).send('Faltan propiedades obligatorias')
+    if (!name || !description || !released || !rating || !background_image) res.status(404).send('Faltan propiedades obligatorias')
 
     const videogameCreated = await Videogame.create({
         createdBy,
         description,
+        background_image,
         name,
         platforms,
         rating,
@@ -106,7 +106,7 @@ const createVideogame = async (req, res, next) => {
 
     const genresInDB = await Genre.findAll({
       where: {
-        name: genre
+        name: genres
       }
     });
     videogameCreated.addGenre(genresInDB)
@@ -119,7 +119,6 @@ const createVideogame = async (req, res, next) => {
 };
 
 
-
 module.exports = {
   getVideogames,
   getVideogamesByName,
@@ -127,6 +126,4 @@ module.exports = {
   gamesGenre,
   gamesPlatforms,
   createVideogame,
-
-
 };
