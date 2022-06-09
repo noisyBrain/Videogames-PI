@@ -1,26 +1,26 @@
 import { useEffect } from 'react';
 
-const Order = ({ onAlph, onRating, onCreation, select }) => {
+const Sort = ({ onAlph, onRating, onCreation, select }) => {
 
   useEffect(() => {
-    console.log("Render del componente Order")
+    console.log("Render del componente Sort")
   })
 
   return (
     <>
-    <select value={select.alph} name='' id='order/alphabetically' onChange={onAlph}>
+    <select value={select.alph} name='' id='sort/alphabetically' onChange={onAlph}>
       <option>Alphabetical</option>
       <option>Ascending</option>
       <option>Descending</option>
     </select>
 
-    <select value={select.rating} name='' id='order/rating' onChange={onRating}>
+    <select value={select.rating} name='' id='sort/rating' onChange={onRating}>
       <option>Rating</option>
       <option>Ascending</option>
       <option>Descending</option>
     </select>
 
-    <select value={select.source} name='' id='order/created/existing' onChange={onCreation}>
+    <select value={select.source} name='' id='sort/created/existing' onChange={onCreation}>
       <option>Source</option>
       <option>Existing</option>
       <option>Created</option>
@@ -29,4 +29,4 @@ const Order = ({ onAlph, onRating, onCreation, select }) => {
   );
 };
 
-export default Order;
+export default Sort;

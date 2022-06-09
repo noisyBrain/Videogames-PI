@@ -1,12 +1,8 @@
-import { useEffect } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import style from './pagination.module.css';
 
 const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage  }) => {
 
-
-  useEffect(() => {
-    console.log("Render del componente Pagination")
-  })
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalVideogames / videogamesPerPage); i++) {
@@ -22,10 +18,12 @@ const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage 
             <li key={number}>
               <a 
                 className=
-                {
+                { 
                   currentPage === number 
-                  ? `${style.active}` : ''
-                } onClick={() => paginate(number)}>
+                  ? `${style.active}` 
+                  : '' 
+                } 
+                onClick={() => paginate(number)}>
                 {number}
               </a>
             </li>

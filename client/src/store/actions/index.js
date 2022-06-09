@@ -2,11 +2,11 @@ import axios from "axios";
 import {
   GET_ALL_VIDEOGAMES,
   GET_VIDEOGAME_BY_NAME,
-  ORDER_ALPHABETICALLY,
+  SORT_ALPHABETICALLY,
   FILTER_BY_GENRE,
   GET_ALL_GENRES,
-  ORDER_BY_RATING,
-  ORDER_BY_CREATION,
+  SORT_BY_RATING,
+  SORT_BY_CREATION,
   GET_DETAIL,
   GET_PLATFORMS,
   SHOW_LOADER,
@@ -69,15 +69,15 @@ export const getVideogameByName = (name) => {
 };
 
 export const orderAlphabetically = (payload) => {
-  return { type: ORDER_ALPHABETICALLY, payload };
+  return { type: SORT_ALPHABETICALLY, payload };
 };
 
 export const orderByRating = (payload) => {
-  return { type: ORDER_BY_RATING, payload };
+  return { type: SORT_BY_RATING, payload };
 };
 
 export const orderByCreation = (payload) => {
-  return { type: ORDER_BY_CREATION, payload };
+  return { type: SORT_BY_CREATION, payload };
 };
 
 // export const getAllGenres = () => {

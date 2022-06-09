@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllVideogames,
   getVideogameByName,
-  hideLoader,
   orderAlphabetically,
   orderByCreation,
   orderByRating,
@@ -14,31 +13,21 @@ import {
 
 import style from "./home.module.css";
 import FilterByGenre from "../Filter/FilterByGenre";
-import Order from "../Order/OrderVideogames";
+import Sort from "../Sort/SortVideogames";
 import Pagination from "../Pagination/Pagination";
 import SearchBar from "../Search/SearchVideogames";
 import Videogames from "./Videogames";
 import Loading from "../Loading/Loading";
 
 const Home = () => {
+  
   const videogames = useSelector((state) => state.videogames);
   const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
   
-  // useCallback(() => {
-  //   function prueba (state) {
-  //     return state && dispatch(hideLoader())
-  //   }
-  // }))
-  
-  useEffect(() => {
-    console.log("Render del componente Home")
-  })
-
-  useEffect(() => {
-    dispatch(getAllVideogames())
-    // prueba()
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(getAllVideogames())
+  // }, [dispatch])
 
   const [currentPage, setCurrentPage] = useState(1);
   const [videogamesPerPage] = useState(15);
@@ -114,8 +103,8 @@ const Home = () => {
         <Link to="/videogame/create">
           <button className={style.create}>Create your own videogame</button>!
         </Link>
-        <FilterByGenre select={select} setSelect={setSelect} />
-        <Order
+        <FilterByGenre select={select} setSelect={setSelect} setCurrentPage={setCurrentPage}/>
+        <Sort
           select={select}
           onAlph={handleAlphabetically}
           onRating={handleRating}
@@ -130,12 +119,14 @@ const Home = () => {
       >
         Refresh
       </button>
+
       <Pagination
         videogamesPerPage={videogamesPerPage}
         totalVideogames={videogames.length}
         paginate={paginate}
         currentPage={currentPage}
       />
+
       <Videogames videogames={currentVideogames} />
     </div>
   );

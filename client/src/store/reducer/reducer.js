@@ -2,10 +2,10 @@ import {
   GET_ALL_VIDEOGAMES, 
   GET_VIDEOGAME_BY_NAME, 
   FILTER_BY_GENRE, 
-  ORDER_ALPHABETICALLY, 
+  SORT_ALPHABETICALLY, 
   GET_ALL_GENRES, 
-  ORDER_BY_RATING, 
-  ORDER_BY_CREATION, 
+  SORT_BY_RATING, 
+  SORT_BY_CREATION, 
   GET_DETAIL,
   GET_PLATFORMS,
   POST_VIDEOGAME,
@@ -36,7 +36,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
         videogames: payload,
       }
 
-    case ORDER_ALPHABETICALLY:
+    case SORT_ALPHABETICALLY:
       const orderAlphabetically = payload === "Alphabetically" ? state.allVideogames :
 
       payload === 'Ascending' ?
@@ -49,7 +49,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
         videogames: orderAlphabetically,
       }
 
-    case ORDER_BY_RATING:
+    case SORT_BY_RATING:
 
       const orderRating = payload === "Rating" ? state.allVideogames :
 
@@ -63,14 +63,14 @@ export default function rootReducer(state = initialState, { type, payload }) {
         videogames: orderRating,
       }
     
-    case ORDER_BY_CREATION:
-      const orderCreation = payload === "Created" ? state.allVideogames.filter(v => v.createdBy)
-      :
-      state.allVideogames.filter(v => !v.createdBy)
+    case SORT_BY_CREATION:
+      const sortCreation = payload === "Created" 
+      ? state.allVideogames.filter(v => v.createdBy)
+      : state.allVideogames.filter(v => !v.createdBy)
 
       return {
         ...state,
-        videogames: orderCreation,
+        videogames: sortCreation,
       }
 
     case GET_ALL_GENRES:
@@ -87,7 +87,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         videogames: filteredByGenre,
-        // consola: console.log("filteredByGenre (reducer) -> ", filteredByGenre)
       }
     
     case GET_DETAIL:
@@ -108,13 +107,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         loading: true,
-        // consola: console.log("loading show loader -> ", state.loading)
       }
     case HIDE_LOADER:
       return {
         ...state,
         loading: false,
-        // consola: console.log("loading hide loader -> ", state.loading)
       }
     default:
       return {

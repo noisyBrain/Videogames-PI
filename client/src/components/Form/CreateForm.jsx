@@ -10,12 +10,11 @@ import style from "./createform.module.css";
 
 const validate = (state) => {
   const error = {};
-  if (!state.name || state.name.length < 4 || state.name.length > 30 || !(/^[a-zA-Z]+$/).test(state.name)) {
-    error.name = "Name must be between 4 and 30 characters and have only letters";
+  if (state.name.length < 4) error.name = "Name must have at least 4 characters";
+  if (!state.name) error.name = "Name needs a value";
+  if (state.name.length > 40) error.name = "Name must have max 40 characters";
 
-  }
-  if (
-    !state.description ||
+  if (!state.description ||
     state.description.length < 1 ||
     state.description.length > 200
   ) {
@@ -61,13 +60,13 @@ const CreateForm = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if (state.description || state.name || state.rating > 0 || state.genres || state.platforms) {
       dispatch(postVideogame(state));
       alert("Videogame creado con éxito!");
       setState({
         description: "",
         genres: [],
         name: "",
+        background_image: "",
         platforms: [],
         rating: 0,
         released: "",
@@ -78,8 +77,8 @@ const CreateForm = () => {
           [e.target.name]: e.target.value,
         })
       );
+      console.log(error)
       navigate("/home");
-      }
   };
 
 
@@ -128,9 +127,6 @@ const CreateForm = () => {
         />
         {error.name && <span>{error.name}</span>}
 
-        {/* </div> */}
-
-        {/* <div> */}
 
         <label className={style.label_form}>Description: </label>
         <textarea
@@ -143,9 +139,6 @@ const CreateForm = () => {
         />
         {error.description && <span>{error.description}</span>}
 
-        {/* </div> */}
-
-        {/* <div> */}
 
         <label className={style.label_form}>Released: </label>
         <input
@@ -162,8 +155,8 @@ const CreateForm = () => {
         <input
           className={style.input_form}
           type="text"
-          value={state.image}
-          name="image"
+          value={state.background_image}
+          name="background_image"
           placeholder="Image"
           onChange={(e) => handleOnChange(e)}
         />
@@ -218,11 +211,11 @@ const CreateForm = () => {
 
           <button 
             className={style.button_form}
-            disabled={error.name || error.description || error.genres || error.platforms}
             type="submit">Crear</button>
           <Link to="/home">
             <button className={style.button_form}>Go Back</button>
           </Link>
+
 
         </div>
 

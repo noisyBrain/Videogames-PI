@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import axios from "axios";
 import style from "./videogameDetail.module.css";
 
-const VideogameDetail = (props) => {
+const VideogameDetail = () => {
+
   const { id } = useParams();
   const [videogameDetail, setVideogameDetail] = useState({});
 
@@ -45,7 +47,7 @@ const VideogameDetail = (props) => {
       </Link>
     </div>
   ) : (
-    <h1>Loading...</h1>
+    <h2>There is nothing here...</h2>
   );
 };
 

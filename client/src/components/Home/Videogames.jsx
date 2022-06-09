@@ -5,16 +5,16 @@ import style from './videogames.module.css';
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getAllVideogames, hideLoader, showLoader } from "../../store/actions";
+import { getAllVideogames, hideLoader } from "../../store/actions";
 
 import Videogame from "./Videogame";
 
 const Videogames = ({ videogames }) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("Render del componente Videogames")
-  })
+  // const handleDelete = (e) => {
+  //   console.log(e)
+  // }
 
   useEffect(() => {
     dispatch(getAllVideogames());
@@ -26,14 +26,15 @@ const Videogames = ({ videogames }) => {
       {
         videogames?.map((v, i) => {
         return (
-
           <Videogame
             key={i+v.name}
             name={v.name}
             image={v.background_image}
             genres={v.genres}
             id={v.id}
+            // handleDelete={handleDelete}
           />
+
 
         );
         })

@@ -13,7 +13,6 @@ const SearchBar = ({ onSearch }) => {
     <div>
 
       <input className={style.input} type='search' onChange={(e) => onSearch(e.target.value)} />
-      {/* <input type='submit' onClick={() => onSearch(state)}/> */}
     
     </div>
   )
