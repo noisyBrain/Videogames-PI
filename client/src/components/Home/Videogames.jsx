@@ -12,9 +12,9 @@ import Videogame from "./Videogame";
 const Videogames = ({ videogames }) => {
   const dispatch = useDispatch();
 
-  // const handleDelete = (e) => {
-  //   console.log(e)
-  // }
+  useEffect(() => {
+    console.log("Render del FilterByGenre")
+  })
 
   useEffect(() => {
     dispatch(getAllVideogames());

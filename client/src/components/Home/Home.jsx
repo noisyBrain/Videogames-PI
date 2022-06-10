@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-
 import { Link } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  filterByGenre,
   getAllVideogames,
   getVideogameByName,
   orderAlphabetically,
@@ -11,15 +10,19 @@ import {
   orderByRating,
 } from "../../store/actions";
 
-import style from "./home.module.css";
 import FilterByGenre from "../Filter/FilterByGenre";
-import Sort from "../Sort/SortVideogames";
+import Loading from "../Loading/Loading";
+import style from "./home.module.css";
 import Pagination from "../Pagination/Pagination";
 import SearchBar from "../Search/SearchVideogames";
+import Sort from "../Sort/SortVideogames";
 import Videogames from "./Videogames";
-import Loading from "../Loading/Loading";
 
 const Home = () => {
+
+    useEffect(() => {
+    console.log("Render del componente Home")
+  })
   
   const videogames = useSelector((state) => state.videogames);
   const loading = useSelector((state) => state.loading);
@@ -28,6 +31,12 @@ const Home = () => {
   // useEffect(() => {
   //   dispatch(getAllVideogames())
   // }, [dispatch])
+
+  // useEffect(() => {
+  //   dispatch(showLoader())
+  //   dispatch(hideLoader())
+  // }, [dispatch])
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [videogamesPerPage] = useState(15);
@@ -38,12 +47,15 @@ const Home = () => {
     genre: "Genres",
   });
 
-  const indexOfLastVideogame = currentPage * videogamesPerPage;
-  const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage;
-  const currentVideogames = videogames.slice(
+  const indexOfLastVideogame = currentPage * videogamesPerPage; 
+  const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage; 
+
+  const currentVideogames = videogames.slice( 
     indexOfFirstVideogame,
     indexOfLastVideogame
   );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleOnClickRefresh = (e) => {
     dispatch(getAllVideogames());
@@ -56,10 +68,18 @@ const Home = () => {
     });
   };
 
+
+  // const handleOnSearch = (name) => {
+  //   name 
+  //   ? dispatch(getVideogameByName(name)) 
+  //   : dispatch(getAllVideogames());
+  //   setCurrentPage(1)
+  // };
+
   const handleOnSearch = (name) => {
-    name 
-    ? dispatch(getVideogameByName(name)) 
-    : dispatch(getAllVideogames());
+    name
+    ? dispatch(getVideogameByName(name))
+    : dispatch(filterByGenre('Genres'))
     setCurrentPage(1)
   };
 
@@ -90,7 +110,6 @@ const Home = () => {
     });
   };
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
  
 
@@ -125,6 +144,7 @@ const Home = () => {
         totalVideogames={videogames.length}
         paginate={paginate}
         currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
 
       <Videogames videogames={currentVideogames} />
@@ -132,7 +152,6 @@ const Home = () => {
   );
 
   return loading ? <Loading /> : all;
-  // return <Loading />
 };
 
 export default Home;

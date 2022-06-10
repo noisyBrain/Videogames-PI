@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import style from './pagination.module.css';
 
-const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage  }) => {
+const Pagination = ({ currentPage, paginate, totalVideogames, videogamesPerPage, setCurrentPage  }) => {
 
   const pageNumbers = [];
 

@@ -22,7 +22,7 @@ const FilterByGenre = ({ select, setSelect, setCurrentPage }) => {
 
   const handleGetAllGenres = useCallback(() => {
     dispatch(getAllGenres())
-  }, [])
+  }, [dispatch])
 
   // const handleGetAllGenres = () => {
   //   dispatch(getAllGenres())

@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { deleteVideogame } from '../../store/actions';
+import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { deleteVideogame } from '../../store/actions';
+
 
 import style from './videogame.module.css'
 
 const Videogame = ({ name, image, genres, id }) => {
 
+  useEffect(() => {
+    console.log("Render del componente Home")
+  })
 
 
   return (

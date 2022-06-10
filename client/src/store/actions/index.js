@@ -6,21 +6,13 @@ import {
   FILTER_BY_GENRE,
   GET_ALL_GENRES,
   SORT_BY_RATING,
-  SORT_BY_CREATION,
+  FILTER_BY_CREATION,
   GET_DETAIL,
   GET_PLATFORMS,
   SHOW_LOADER,
   HIDE_LOADER,
 } from "./actionTypes";
 
-// export const getAllVideogames = () => {
-//   return (dispatch) => {
-//     return fetch(`http://localhost:3001/videogames`)
-//       .then((response) => response.json())
-//       .then((data) => dispatch({ type: GET_ALL_VIDEOGAMES, payload: data }))
-//       .catch((error) => console.error(error));
-//   };
-// };
 
 export const showLoader = () => {
   return (dispatch) => {
@@ -38,22 +30,10 @@ export const getAllVideogames = () => {
   return async (dispatch) => {
     dispatch(showLoader());
     const response = (await axios(`http://localhost:3001/videogames`)).data;
-    // console.log("response de action ->", response);
     dispatch({ type: GET_ALL_VIDEOGAMES, payload: response });
-    dispatch(hideLoader())
+    dispatch(hideLoader());
   };
 };
-
-// export const getVideogameByName = (name) => {
-//   return (dispatch) => {
-//     return fetch(`http://localhost:3001/videogames?name=${name}`)
-//       .then((response) => response.json())
-//       .then((data) => dispatch({ type: GET_VIDEOGAME_BY_NAME, payload: data }))
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   };
-// };
 
 export const getVideogameByName = (name) => {
   return async (dispatch) => {
@@ -77,19 +57,8 @@ export const orderByRating = (payload) => {
 };
 
 export const orderByCreation = (payload) => {
-  return { type: SORT_BY_CREATION, payload };
+  return { type: FILTER_BY_CREATION, payload };
 };
-
-// export const getAllGenres = () => {
-//   return (dispatch) => {
-//     return fetch(`http://localhost:3001/genres`)
-//       .then((response) => response.json())
-//       .then((data) => dispatch({ type: GET_ALL_GENRES, payload: data }))
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   };
-// };
 
 export const getAllGenres = () => {
   return async (dispatch) => {
@@ -109,14 +78,6 @@ export const filterByGenre = (payload) => {
   };
 };
 
-// export const getDetail = id => {
-//   return (dispatch) => {
-//     return fetch(`http://localhost:3001/videogame/${id}`)
-//       .then(response => response.json())
-//       .then(data => dispatch({ type: GET_DETAIL, payload: data }))
-//       .catch(error => console.error(error))
-//   }
-// }
 
 export const getDetail = (id) => {
   return async (dispatch) => {
@@ -141,6 +102,7 @@ export const getPlatforms = () => {
   };
 };
 
+
 export const postVideogame = (payload) => {
   return async () => {
     const response = await axios.post(
@@ -150,3 +112,4 @@ export const postVideogame = (payload) => {
     return response;
   };
 };
+
