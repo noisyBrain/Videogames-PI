@@ -20,8 +20,6 @@ const getAllByName = async (name) => {
     return all;
   };
 
-// ruteo get para traer todo (API y DB) al cliente 
-// si llega name por query que pase a la siguiente (que es la que trae por name)
 const getVideogames = async (req, res, next) => {
 
   if (req.query.name) return next()
@@ -35,7 +33,6 @@ const getVideogames = async (req, res, next) => {
   }
 };
 
-// busca en endpoint los games por nombre
 const getVideogamesByName = async (req, res, next) => {
   const { name } = req.query;
 
@@ -47,7 +44,6 @@ const getVideogamesByName = async (req, res, next) => {
   }
 }
 
-// busca videogame por id
 const getVideogamesById = async (req, res, next) => {
   const { id } = req.params
   const regex = /([a-zA-Z]+([0-9]+)+)/
@@ -117,6 +113,8 @@ const createVideogame = async (req, res, next) => {
   }
 
 };
+
+
 
 
 module.exports = {

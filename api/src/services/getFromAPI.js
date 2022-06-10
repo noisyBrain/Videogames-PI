@@ -4,25 +4,40 @@ const { API_KEY } = process.env;
 
 // GET /videogames
 const getAllFromAPI = async () => {
-  let response;
   let videogamesFromAPI = [];
 
   for (let i = 2; i <= 6; i++) {
-    response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data.results
-    videogamesFromAPI.push(response.map((ele) => ({
+
+    videogamesFromAPI.push(axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`))
+    // console.log("videogamesFromAPI en el for -> ", videogamesFromAPI)
+  //   response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data.results
+  //   videogamesFromAPI.push(response.map((ele) => ({
+  //     id: ele.id,
+  //     background_image: ele.background_image,
+  //     name: ele.name,
+  //     genres: ele.genres?.map((g) => g.name),
+  //     rating: ele.rating,
+  //     platforms: ele.platforms?.map(p => p.platform.name)
+  //     }))
+  //   );
+  //   videogamesFromAPI = videogamesFromAPI.flat();
+  // }
+  // console.log("videogamesFromAPI A VER QUE PASA -> ", videogamesFromAPI)
+  // return videogamesFromAPI;
+  };
+  videogamesFromAPI = (await Promise.all(videogamesFromAPI)).map(ele => {
+    return ele.data.results.map(ele => ({
       id: ele.id,
       background_image: ele.background_image,
       name: ele.name,
       genres: ele.genres?.map((g) => g.name),
       rating: ele.rating,
       platforms: ele.platforms?.map(p => p.platform.name)
-      }))
-    );
-    videogamesFromAPI = videogamesFromAPI.flat();
-  }
-  return videogamesFromAPI;
-};
+    }))
+  })
 
+  return videogamesFromAPI.flat();
+}
 
 // GET /videogames?name=...
 const getVideogameByNameFromAPI = async (name) => {
