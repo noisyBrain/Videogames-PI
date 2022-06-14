@@ -12,7 +12,7 @@ const SearchBar = ({ onSearch }) => {
 
     <div>
 
-      <input className={style.input} type='search' onChange={(e) => onSearch(e.target.value)} />
+      <input className={style.input} type='search' onChange={(e) => onSearch(e.target.value)} placeholder='Search videogame' />
     
     </div>
   )

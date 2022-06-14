@@ -44,7 +44,6 @@ const CreateForm = () => {
 
   const genres = useSelector((state) => state.genres);
   const platforms = useSelector((state) => state.platforms);
-  const videogames = useSelector((state) => state.videogames)
 
   const dispatch = useDispatch();
 
@@ -67,13 +66,12 @@ const CreateForm = () => {
         rating: 0,
         released: "",
       });
-      setError(
-        validate({
-          ...state,
-          [e.target.name]: e.target.value,
-        })
-      );
-      console.log(error)
+      // setError(
+      //   validate({
+      //     ...state,
+      //     [e.target.name]: e.target.value,
+      //   })
+      // );
       navigate("/home");
   };
 
@@ -204,9 +202,8 @@ const CreateForm = () => {
 
         <div className={style.buttons}>
 
-          <button 
-            className={style.button_form}
-            type="submit">Crear</button>
+          <button disabled={Object.keys(error).length} className={style.button_form} type="submit">Create</button>
+
           <Link to="/home">
             <button className={style.button_form}>Go Back</button>
           </Link>

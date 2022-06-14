@@ -13,10 +13,6 @@ const Videogames = ({ videogames }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("Render del FilterByGenre")
-  })
-
-  useEffect(() => {
     dispatch(getAllVideogames());
     dispatch(hideLoader())
   }, []);
@@ -32,7 +28,7 @@ const Videogames = ({ videogames }) => {
             image={v.background_image}
             genres={v.genres}
             id={v.id}
-            // handleDelete={handleDelete}
+            rating={v.rating}
           />
 
 

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 import style from './videogame.module.css'
 
-const Videogame = ({ name, image, genres, id }) => {
+const Videogame = ({ name, image, genres, id, rating }) => {
 
   useEffect(() => {
     console.log("Render del componente Home")
@@ -29,6 +29,8 @@ const Videogame = ({ name, image, genres, id }) => {
           <div className={style.genre}>
               <h5>{`${genres.join(", ")}`}</h5>
           </div>
+
+          <h5>{rating}</h5>
 
           <Link to={`/videogame/${id}`}><button className={`${style.custom_btn} ${style.btn}`}><span>Detail</span></button></Link>
 

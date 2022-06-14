@@ -8,6 +8,7 @@ import {
   orderAlphabetically,
   orderByCreation,
   orderByRating,
+  promedioRating,
 } from "../../store/actions";
 
 import FilterByGenre from "../Filter/FilterByGenre";
@@ -19,23 +20,11 @@ import Sort from "../Sort/SortVideogames";
 import Videogames from "./Videogames";
 
 const Home = () => {
-
-    useEffect(() => {
-    console.log("Render del componente Home")
-  })
   
   const videogames = useSelector((state) => state.videogames);
   const loading = useSelector((state) => state.loading);
-  const dispatch = useDispatch();
-  
-  // useEffect(() => {
-  //   dispatch(getAllVideogames())
-  // }, [dispatch])
 
-  // useEffect(() => {
-  //   dispatch(showLoader())
-  //   dispatch(hideLoader())
-  // }, [dispatch])
+  const dispatch = useDispatch();
 
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,6 +46,13 @@ const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleRPGRating = (payload) => {
+    dispatch(promedioRating(payload))
+    const ratings = videogames.map(v => v.rating)
+    const promedio = ratings.reduce((a,b) => a+b) / ratings.length
+    alert(promedio)
+  }
+
   const handleOnClickRefresh = (e) => {
     dispatch(getAllVideogames());
     setCurrentPage(1);
@@ -67,14 +63,6 @@ const Home = () => {
       genre: "Genres",
     });
   };
-
-
-  // const handleOnSearch = (name) => {
-  //   name 
-  //   ? dispatch(getVideogameByName(name)) 
-  //   : dispatch(getAllVideogames());
-  //   setCurrentPage(1)
-  // };
 
   const handleOnSearch = (name) => {
     name
@@ -110,10 +98,6 @@ const Home = () => {
     });
   };
 
-
- 
-
-
   const all = (
     <div className={style.main_container}>
       <h1 className={style.title}>Videogames Page</h1>
@@ -131,6 +115,7 @@ const Home = () => {
         />
       </nav>
 
+        <button onClick={() => handleRPGRating('RPG')}>Promedio</button>
       <SearchBar onSearch={handleOnSearch} />
       <button
         className={style.button_refresh}

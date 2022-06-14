@@ -12,6 +12,7 @@ import {
   SHOW_LOADER,
   HIDE_LOADER,
   FILTER_BY_CREATION_RATING,
+  PROMEDIO_RATING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -126,6 +127,16 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         loading: false,
       };
+    
+    case PROMEDIO_RATING:
+      const todosVideojuegos = state.allVideogames;
+      const filtrosGeneros = payload === "RPG" && todosVideojuegos.filter((el) => el.genres && el.genres.includes(payload))
+
+      return {
+        ...state,
+        videogames: filtrosGeneros,
+      }
+
 
     default:
       return {
