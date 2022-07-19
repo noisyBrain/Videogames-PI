@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "pm2 api/index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -12,5 +12,8 @@
   "engines": {
     "node": ">=12.18.3",
     "npm": ">=6.14.6"
+  },
+  "devDependencies": {
+    "pm2": "5.2.0"
   }
 }
