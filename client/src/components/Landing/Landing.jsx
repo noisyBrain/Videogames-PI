@@ -1,12 +1,7 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from './Landing.module.css'
 
 const Landing = () => {
-
-  useEffect(() => {
-    console.log("Render del componente Landing")
-  })
 
   return (
     <div className={style.main_container} >

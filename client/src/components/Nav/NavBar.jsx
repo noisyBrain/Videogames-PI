@@ -1,10 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllVideogames, getVideogameByName, orderAlphabetically, orderByCreation, orderByRating } from "../../store/actions";
+import { orderAlphabetically, orderByCreation, orderByRating } from "../../store/actions";
+
 import FilterByGenre from "../Filter/FilterByGenre";
 import Order from "../Order/OrderVideogames";
 
-// import style from './home.module.css';
 const Navbar = () => {
   
   const videogames = useSelector((state) => state.videogames);

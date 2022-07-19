@@ -4,10 +4,6 @@ import { getAllGenres, filterByGenre } from "../../store/actions";
 
 const FilterByGenre = ({ select, setSelect, setCurrentPage }) => {
 
-  useEffect(() => {
-    console.log("Render del FilterByGenre")
-  })
-
   const dispatch = useDispatch();
   const genres = useSelector((state) => state.genres);
 
@@ -24,15 +20,10 @@ const FilterByGenre = ({ select, setSelect, setCurrentPage }) => {
     dispatch(getAllGenres())
   }, [dispatch])
 
-  // const handleGetAllGenres = () => {
-  //   dispatch(getAllGenres())
-  // }
-  
   useEffect(() => {
     handleGetAllGenres()
     return () => handleGetAllGenres() 
   }, [dispatch, handleGetAllGenres]);
-
 
   return (
     <select 

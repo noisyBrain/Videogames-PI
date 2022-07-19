@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   filterByGenre,
@@ -8,7 +8,7 @@ import {
   orderAlphabetically,
   orderByCreation,
   orderByRating,
-  promedioRating,
+  showLoader,
 } from "../../store/actions";
 
 import FilterByGenre from "../Filter/FilterByGenre";
@@ -19,17 +19,11 @@ import SearchBar from "../Search/SearchVideogames";
 import Sort from "../Sort/SortVideogames";
 import Videogames from "./Videogames";
 
+import { useEffect } from "react";
+import { hideLoader } from "../../store/actions";
+
 const Home = () => {
   
-  const videogames = useSelector((state) => state.videogames);
-  const loading = useSelector((state) => state.loading);
-
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getAllVideogames())
-  // }, [])
-
   const [currentPage, setCurrentPage] = useState(1);
   const [videogamesPerPage] = useState(15);
   const [select, setSelect] = useState({
@@ -38,23 +32,25 @@ const Home = () => {
     source: "Source",
     genre: "Genres",
   });
+  
+  
+  const dispatch = useDispatch();
+  
+  const videogames = useSelector((state) => state.videogames);
+  const loading = useSelector((state) => state.loading);
 
   const indexOfLastVideogame = currentPage * videogamesPerPage; 
   const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage; 
-
   const currentVideogames = videogames.slice( 
     indexOfFirstVideogame,
     indexOfLastVideogame
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const handleRPGRating = (payload) => {
-    dispatch(promedioRating(payload))
-    const ratings = videogames.map(v => v.rating)
-    const promedio = ratings.reduce((a,b) => a+b) / ratings.length
-    alert(promedio)
-  }
+  
+  useEffect(() => {
+    dispatch(getAllVideogames());
+  }, [dispatch]);
 
   const handleOnClickRefresh = (e) => {
     dispatch(getAllVideogames());
@@ -118,7 +114,6 @@ const Home = () => {
         />
       </nav>
 
-        <button onClick={() => handleRPGRating('RPG')}>Promedio</button>
       <SearchBar onSearch={handleOnSearch} />
       <button
         className={style.button_refresh}

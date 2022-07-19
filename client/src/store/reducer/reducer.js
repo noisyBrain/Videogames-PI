@@ -11,7 +11,6 @@ import {
   POST_VIDEOGAME,
   SHOW_LOADER,
   HIDE_LOADER,
-  PROMEDIO_RATING,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -57,7 +56,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case SORT_BY_RATING:
       const orderRating =
         payload === "Rating"
-          ? state.allVideogames
+        ? state.allVideogames
           : payload === "Ascending"
           ? state.videogames.sort((a, b) =>
               a.rating > b.rating ? 1 : a.rating < b.rating ? -1 : 0
@@ -65,7 +64,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
           : state.videogames.sort((a, b) =>
               a.rating > b.rating ? -1 : a.rating < b.rating ? 1 : 0
             );
-
+      console.log("orderRating -> ", orderRating)
       return {
         ...state,
         videogames: orderRating,
@@ -126,20 +125,9 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         loading: false,
       };
-    
-    case PROMEDIO_RATING:
-      const todosVideojuegos = state.allVideogames;
-      const filtrosGeneros = payload === "RPG" && todosVideojuegos.filter((el) => el.genres && el.genres.includes(payload))
-
-      return {
-        ...state,
-        videogames: filtrosGeneros,
-      }
-
-
     default:
       return {
         ...state,
       };
-  }
-}
+  };
+};

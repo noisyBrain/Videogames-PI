@@ -11,7 +11,7 @@
   padding: 5px;
   border-radius: 1rem;
   overflow: visible;
-  background: #20202081;
+  background: #2020206d;
   position: relative;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .genres {
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-top: 0.5rem;
 }
 

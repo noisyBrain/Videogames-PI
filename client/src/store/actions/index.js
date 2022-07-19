@@ -11,7 +11,6 @@ import {
   GET_PLATFORMS,
   SHOW_LOADER,
   HIDE_LOADER,
-  PROMEDIO_RATING,
 } from "./actionTypes";
 
 
@@ -114,8 +113,3 @@ export const postVideogame = (payload) => {
     return response;
   };
 };
-
-export const promedioRating = (payload) => {
-  console.log(payload)
-  return { type: PROMEDIO_RATING, payload }
-}

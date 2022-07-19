@@ -10,18 +10,18 @@ import style from "./createform.module.css";
 
 const validate = (state) => {
   const error = {};
-
+  // name validation
   if (state.name.length < 4) error.name = "Name must have at least 4 characters";
   if (!state.name) error.name = "Name needs a value";
   if (state.name.length > 40) error.name = "Name must have max 40 characters";
-
+  // description validation
   if (state.description.length < 30 || state.description.length > 300) error.description = "Description must be between 30 and 300 characters"
-
+  // rating validation
   if (!state.rating) error.rating = "Videogame must have rating";
   if(state.rating < 0 || state.rating > 5) error.rating = "Rating must be between 0.1 and 5.0"
-
+  // genres validation
   if (!state.genres.length) error.genres = "Videogame must have at least 1 genre";
-
+  // platforms validation
   if (!state.platforms.length) error.platforms = "Videogame must have at least 1 platform";
 
   return error;
@@ -30,6 +30,7 @@ const validate = (state) => {
 const CreateForm = () => {
 
   const navigate = useNavigate();
+  const [error, setError] = useState({});
   const [state, setState] = useState({
     description: "",
     genres: [],
@@ -40,13 +41,10 @@ const CreateForm = () => {
     released: "",
   });
 
-  const [error, setError] = useState({});
-
   const genres = useSelector((state) => state.genres);
   const platforms = useSelector((state) => state.platforms);
 
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(getAllGenres());
@@ -66,15 +64,8 @@ const CreateForm = () => {
         rating: 0,
         released: "",
       });
-      // setError(
-      //   validate({
-      //     ...state,
-      //     [e.target.name]: e.target.value,
-      //   })
-      // );
       navigate("/home");
   };
-
 
   const handleOnChange = (e) => {
     setState({
@@ -102,12 +93,10 @@ const CreateForm = () => {
     );
   };
 
-
   return (
     <div className={style.container_form}>
       <form className={style.form} onSubmit={(e) => handleOnSubmit(e)}>
         <legend className={style.legend}>Create your own Videogame!</legend>
-        {/* <div> */}
 
         <label className={style.label_form}>Name: </label>
         <input

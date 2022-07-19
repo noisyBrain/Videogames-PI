@@ -1,11 +1,6 @@
-import { useEffect } from 'react';
 import style from './loading.module.css';
 
 const Loading = () => {
-
-   useEffect(() => {
-    console.log("Render del componente Loading")
-  })
 
   return (
     <div className={style.main_container}>
