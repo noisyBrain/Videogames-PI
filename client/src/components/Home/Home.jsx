@@ -26,6 +26,9 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(getAllVideogames())
+  // }, [])
 
   const [currentPage, setCurrentPage] = useState(1);
   const [videogamesPerPage] = useState(15);

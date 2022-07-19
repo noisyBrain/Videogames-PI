@@ -11,7 +11,6 @@ import {
   POST_VIDEOGAME,
   SHOW_LOADER,
   HIDE_LOADER,
-  FILTER_BY_CREATION_RATING,
   PROMEDIO_RATING,
 } from "../actions/actionTypes";
 

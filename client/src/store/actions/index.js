@@ -72,6 +72,7 @@ export const getAllGenres = () => {
   };
 };
 
+
 export const filterByGenre = (payload) => {
   return {
     type: FILTER_BY_GENRE,

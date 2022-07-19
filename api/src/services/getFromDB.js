@@ -19,8 +19,7 @@ const getAllFromDB = async () => {
   videogameFromDB = videogameFromDB.map(videogame => ({
     ...videogame,
     genres: videogame.genres.map(g => g.name),
-  }))
-
+  }));
   return videogameFromDB;
 };
 
@@ -47,12 +46,12 @@ const getGenres = async () => {
 // platfoms from api to db
 const getPlatforms = async () => {
   const response = (await axios(`https://api.rawg.io/api/platforms?key=${API_KEY}`)).data.results
-  .map(platform => platform.name)
-  .map(p => {
-    return Platform.findOrCreate({
-      where: { name: p },
+    .map(platform => platform.name)
+    .map(p => {
+      return Platform.findOrCreate({
+        where: { name: p },
+      });
     });
-  });
   const allPlatforms = await Platform.findAll();
 
   return allPlatforms;

@@ -4,27 +4,12 @@ const { API_KEY } = process.env;
 
 // GET /videogames
 const getAllFromAPI = async () => {
+
   let videogamesFromAPI = [];
-
   for (let i = 2; i <= 6; i++) {
-
     videogamesFromAPI.push(axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`))
-    // console.log("videogamesFromAPI en el for -> ", videogamesFromAPI)
-  //   response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)).data.results
-  //   videogamesFromAPI.push(response.map((ele) => ({
-  //     id: ele.id,
-  //     background_image: ele.background_image,
-  //     name: ele.name,
-  //     genres: ele.genres?.map((g) => g.name),
-  //     rating: ele.rating,
-  //     platforms: ele.platforms?.map(p => p.platform.name)
-  //     }))
-  //   );
-  //   videogamesFromAPI = videogamesFromAPI.flat();
-  // }
-  // console.log("videogamesFromAPI A VER QUE PASA -> ", videogamesFromAPI)
-  // return videogamesFromAPI;
   };
+
   videogamesFromAPI = (await Promise.all(videogamesFromAPI)).map(ele => {
     return ele.data.results.map(ele => ({
       id: ele.id,
@@ -33,16 +18,15 @@ const getAllFromAPI = async () => {
       genres: ele.genres?.map((g) => g.name),
       rating: ele.rating,
       platforms: ele.platforms?.map(p => p.platform.name)
-    }))
-  })
-
+    }));
+  });
   return videogamesFromAPI.flat();
-}
+};
 
 // GET /videogames?name=...
 const getVideogameByNameFromAPI = async (name) => {
-  const response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}&page_size=15`)).data.results;
 
+  const response = (await axios(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}&page_size=15`)).data.results;
   const videogames = response.map(e => ({
     id: e.id,
     background_image: e.background_image,
